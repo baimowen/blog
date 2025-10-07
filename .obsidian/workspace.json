@@ -1,0 +1,179 @@
+{
+  "main": {
+    "id": "c663a5e293fcdcdc",
+    "type": "split",
+    "children": [
+      {
+        "id": "42bf0f1630c082d9",
+        "type": "tabs",
+        "dimension": 77.76962582538518,
+        "children": [
+          {
+            "id": "f3a4e8cdece6aa4b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "articles/17 -- k8s 编排/k8s 编排.md",
+                "mode": "source",
+                "source": true
+              },
+              "icon": "lucide-file",
+              "title": "k8s 编排"
+            },
+            "group": "a74e9595db7b6297"
+          }
+        ]
+      },
+      {
+        "id": "99cecb6f2f97b441",
+        "type": "tabs",
+        "dimension": 22.23037417461482,
+        "children": [
+          {
+            "id": "a4a563e30e912ed6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "articles/17 -- k8s 编排/k8s 编排.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "k8s 编排 的大纲"
+            },
+            "group": "a74e9595db7b6297"
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "9b9be9ab98ea2a2b",
+    "type": "split",
+    "children": [
+      {
+        "id": "f936660ae4a9d0b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "512d89b0d23dacaa",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "9fb182492d80027d",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "949af8a12af1a015",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "7e2fb8b5eaea982c",
+    "type": "split",
+    "children": [],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:创建新数据库": false
+    }
+  },
+  "active": "f3a4e8cdece6aa4b",
+  "lastOpenFiles": [
+    "README.md",
+    "re",
+    "2025-10-07.md",
+    "articles/17 -- k8s 编排/k8s 编排.md",
+    "未命名.base",
+    "articles/08 -- podman 生成 k8s 集群/podman生成k8s集群.md",
+    "articles/18 -- kickstart/Kickstart.md",
+    "articles/17 -- k8s 编排/success_info.png",
+    "articles/14 -- 容器运行时/容器运行时.md",
+    "articles/15 -- containerd的使用/containerd 的使用.md",
+    "articles/09 -- 单节点 k8s 集群自动化部署/单节点k8s集群自动化部署.md",
+    "articles/17 -- k8s 编排/pause.png",
+    "articles/17 -- k8s 编排/node.svg",
+    "articles/17 -- k8s 编排/master_node.svg",
+    "articles/17 -- k8s 编排/pause.url",
+    "articles/17 -- k8s 编排/新快捷方式.lnk",
+    "articles/17 -- k8s 编排/新建 文本文档.txt",
+    "articles/17 -- k8s 编排/1.html",
+    "0f338dee2baf60d325436ff284900d19.png",
+    "articles/04 -- 文件传输/文件传输.md",
+    "articles/05 -- 三剑客/三剑客.md",
+    "articles/06 -- SQL/sql.md",
+    "articles/07 -- Nginx/Nginx.md",
+    "articles/10 -- kubeadm 初始化问题/kubeadm 初始化问题.md",
+    "articles/11 -- 进程替换/进程替换.md",
+    "articles/12 -- Vagrant 用法/Vagrant 用法.md",
+    "articles/13 -- 自签证书/自签证书.md",
+    "articles/15 -- containerd的使用/containerd-1.7.28-linux-amd64.tar.gz",
+    "articles/15 -- containerd的使用/Untitled.txt",
+    "articles/17 -- k8s 编排/Untitled.txt",
+    "articles/15 -- containerd的使用/etc.containerd.config.toml",
+    "articles/17 -- k8s 编排/kubernetes_master_node.svg",
+    "articles/17 -- k8s 编排/kubernetes master node.svg",
+    "articles/17 -- k8s 编排/ChatGPT Image 2025年10月4日 10_40_34.png",
+    "articles/16 -- btrfs on LUKS/btrfs on LUKS.md",
+    "articles/未命名.md",
+    "moments/备份文件.md",
+    "moments/my info.md",
+    "moments/修改用户提示符.md",
+    "articles/03 -- HomeManager 和 Flake/HomeManager 和 Flake.md",
+    "articles/18 -- kickstart/未完成.md",
+    "articles/04 -- 文件传输/magic-wormhole.md",
+    "articles/02 -- NixOS安装/NixOS 安装.md",
+    "articles/15 -- containerd的使用/未完成.md",
+    "articles/15 -- containerd的使用/未命名.canvas",
+    "未命名 1.canvas",
+    "未命名.canvas",
+    "paper7/container-runtime.png",
+    "paper7/container-runtime.svg"
+  ]
+}

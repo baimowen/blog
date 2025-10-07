@@ -1,0 +1,37 @@
+<svg width="720" height="420" viewBox="0 0 720 420" xmlns="http://www.w3.org/2000/svg" role="img">
+  <rect x="10" y="10" width="700" height="400" rx="18" ry="18" fill="#e9f2ff" stroke="#7aa2ff" stroke-width="2" />
+  <text x="30" y="38" class="label">Node</text>
+  <g transform="translate(80,80)">
+    <rect x="0" y="0" width="560" height="260" rx="12" ry="12" fill="#ffffff" stroke="#cfd8e6" stroke-width="1.5" />
+    <text x="14" y="28" class="sub">Pod</text>
+    <g transform="translate(220,20)">
+      <rect x="0" y="0" width="120" height="40" rx="8" ry="8" fill="#f0f0f0" stroke="#b0b0b0" stroke-width="1.5" />
+      <text x="30" y="25" class="sub">Pause</text>
+    </g>
+    <g transform="translate(36,100)">
+      <rect x="0" y="0" width="220" height="140" rx="10" ry="10" fill="#fff8e6" stroke="#ffd37a" stroke-width="1.5" />
+      <text x="16" y="28" class="sub">containerA</text>
+      <g transform="translate(16,44)">
+        <circle cx="10" cy="10" r="10" fill="#fff" stroke="#ffd37a" stroke-width="1" />
+        <rect x="5" y="28" width="60" height="8" rx="4" fill="#fff" stroke="#ffe8b8" stroke-width="1" />
+      </g>
+    </g>
+    <g transform="translate(304,100)">
+      <rect x="0" y="0" width="220" height="140" rx="10" ry="10" fill="#eef9ff" stroke="#9ad0ff" stroke-width="1.5" />
+      <text x="16" y="28" class="sub">containerB</text>
+      <g transform="translate(16,44)">
+        <rect x="0" y="0" width="36" height="20" rx="4" fill="#fff" stroke="#cfeeff" stroke-width="1" />
+        <circle cx="46" cy="10" r="6" fill="#fff" stroke="#cfeeff" stroke-width="1" />
+      </g>
+    </g>
+    <g>
+      <line x1="280" y1="100" x2="280" y2="60" stroke="#7aa2ff" stroke-width="2" marker-end="url(#arrow)" />
+      <text x="290" y="80" class="sub">Join Network Namespace</text>
+    </g>
+  </g>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="6" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7aa2ff" />
+    </marker>
+  </defs>
+</svg>

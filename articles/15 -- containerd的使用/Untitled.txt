@@ -1,0 +1,247 @@
+fedora@localhost:~$ sudo dnf install containerd -y
+[sudo] fedora 的密码：
+仓库更新和加载中:
+仓库加载完成。
+Package                                                                 Arch            Version                                                                 Repository                                    SizeInstalling:
+ containerd                                                             x86_64          2.0.6-1.fc42                                                            updates                                   99.4 MiBInstalling dependencies:
+ runc                                                                   x86_64          2:1.3.1-1.fc42                                                          updates                                   12.6 MiB
+Transaction Summary:
+ Installing:         2 packages
+
+本次要处理的软件包总大小为 32 MiB. 还需下载 32 MiB。
+此次操作完成之后，112 MiB 额外的空间被使用 (安装 112 MiB, 删除 0 B)。
+[1/2] runc-2:1.3.1-1.fc42.x86_64                                                                                                                                          100% |   5.5 MiB/s |   3.6 MiB |  00m01s[2/2] containerd-0:2.0.6-1.fc42.x86_64                                                                                                                                    100% |  11.9 MiB/s |  28.7 MiB |  00m02s------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------[2/2] Total                                                                                                                                                               100% |  11.5 MiB/s |  32.3 MiB |  00m03s执行事务
+[1/4] 验证软件包文件                                                                                                                                               100% |  21.0   B/s |   2.0   B |  00m00s
+[2/4] 准备事务                                                                                                                                                        100% |  20.0   B/s |   2.0   B |  00m00s
+[3/4] 安装runc-2:1.3.1-1.fc42.x86_64                                                                                                                                    100% | 131.7 MiB/s |  12.6 MiB |  00m00s
+[4/4] 安装containerd-0:2.0.6-1.fc42.x86_64                                                                                                                              100% |  44.9 MiB/s |  99.5 MiB |  00m02s
+完成！
+fedora@localhost:~$ sudo cat /etc/containerd/config
+version = 2
+
+[plugins]
+  [plugins."io.containerd.grpc.v1.cri"]
+    [plugins."io.containerd.grpc.v1.cri".cni]
+      bin_dir = "/opt/cni/bin"
+      conf_dir = "/etc/cni/net.d"
+  [plugins."io.containerd.internal.v1.opt"]
+    path = "/var/lib/containerd/opt"
+fedora@localhost:~$ curl -LO https://github.com/containernetworking/plugins/releases/download/v1.8.0/cni-plugins-linux-amd64-v1.8.0.tgz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 52.7M  100 52.7M    0     0  23.5M      0  0:00:02  0:00:02 --:--:-- 57.3M
+fedora@localhost:~$ curl -LO https://github.com/containernetworking/cni/archive/refs/tags/v1.3.0.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  120k    0  120k    0     0  47700      0 --:--:--  0:00:02 --:--:-- 77790
+fedora@localhost:~$ sudo mkdir -p /opt/cni/bin
+fedora@localhost:~$ sudo tar -zxf cni-plugins-linux-amd64-v1.8.0.tgz -C /opt/cni/bin
+fedora@localhost:~$ ls /opt/cni/bin/{bridge,host-local,loopback}
+-rwxr-xr-x. 1 fedora fedora 5.5M Sep  1 23:29 /opt/cni/bin/bridge
+-rwxr-xr-x. 1 fedora fedora 4.2M Sep  1 23:29 /opt/cni/bin/host-local
+-rwxr-xr-x. 1 fedora fedora 4.2M Sep  1 23:29 /opt/cni/bin/loopback
+fedora@localhost:~$ tar -xf v1.3.0.tar.gz
+fedora@localhost:~$ sudo mkdir -p /etc/cni/net.d
+fedora@localhost:~$ sudo vim /etc/cni/net.d/99-lo.conf
+fedora@localhost:~$ sudo vim /etc/cni/net.d/10-cni0.conf
+fedora@localhost:~$ sudo cat /etc/cni/net.d/10-cni0.conf 
+{
+  "cniVersion": "0.4.0",
+  "name": "cni0",
+  "type": "bridge",
+  "bridge": "cni0",
+  "isGateway": true,
+  "isMasq": true,
+  "ipam": {
+    "type": "host-local",
+        "ranges": [
+      [
+        {
+          "subnet": "10.66.0.0/16"
+        }
+      ]
+    ],
+    "routes": [
+      { "dst": "0.0.0.0/0" }
+    ]
+  }
+}
+fedora@localhost:~$ sudo cat /etc/cni/net.d/99-lo.conf 
+{
+  "cniVersion": "0.4.0",
+  "name": "lo",
+  "type": "loopback"
+}
+fedora@localhost:~$ sudo jq . /etc/cni/net.d/10-cni0.conf
+{
+  "cniVersion": "0.4.0",
+  "name": "cni0",
+  "type": "bridge",
+  "bridge": "cni0",
+  "isGateway": true,
+  "isMasq": true,
+  "ipam": {
+    "type": "host-local",
+    "ranges": [
+      [
+        {
+          "subnet": "10.66.0.0/16"
+        }
+      ]
+    ],
+    "routes": [
+      {
+        "dst": "0.0.0.0/0"
+      }
+    ]
+  }
+}
+fedora@localhost:~$ sudo jq . /etc/cni/net.d/99-lo.conf
+{
+  "cniVersion": "0.4.0",
+  "name": "lo",
+  "type": "loopback"
+}
+fedora@localhost:~$ sudo systemctl start containerd
+fedora@localhost:~$ cd cni-1.3.0/scripts
+fedora@localhost:~/cni-1.3.0/scripts$ ls
+total 16K
+drwxr-xr-x.  2 fedora fedora   73 Apr  7 23:37 .
+drwxr-xr-x. 10 fedora fedora 4.0K Apr  7 23:37 ..
+-rwxr-xr-x.  1 fedora fedora  510 Apr  7 23:37 docker-run.sh
+-rwxr-xr-x.  1 fedora fedora 1.8K Apr  7 23:37 exec-plugins.sh
+-rwxr-xr-x.  1 fedora fedora  434 Apr  7 23:37 priv-net-run.sh
+fedora@localhost:~/cni-1.3.0/scripts$ sudo -i
+root@localhost:~# cd /home/fedora/cni-1.3.0/scripts/
+root@localhost:/home/fedora/cni-1.3.0/scripts# ./priv-net-run.sh 
+Usage: bridge [ OPTIONS ] OBJECT { COMMAND | help }
+       bridge [ -force ] -batch filename
+where  OBJECT := { link | fdb | mdb | mst | vlan | vni | monitor }
+       OPTIONS := { -V[ersion] | -s[tatistics] | -d[etails] |
+                    -o[neline] | -t[imestamp] | -n[etns] name |
+                    -com[pressvlans] -c[olor] -p[retty] -j[son] }
+cni0 : error executing ADD:
+root@localhost:/home/fedora/cni-1.3.0/scripts# ip netns ls
+22dc6849289e6af9
+root@localhost:/home/fedora/cni-1.3.0/scripts# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: ens33: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:0c:29:6b:0c:83 brd ff:ff:ff:ff:ff:ff
+    altname enp2s1
+    altname enx000c296b0c83
+    inet 192.168.99.31/24 brd 192.168.99.255 scope global noprefixroute ens33
+       valid_lft forever preferred_lft forever
+    inet6 fe80::20c:29ff:fe6b:c83/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+root@localhost:/home/fedora/cni-1.3.0/scripts# ip netns del 22dc6849289e6af9
+root@localhost:/home/fedora/cni-1.3.0/scripts# ip netns add testns
+root@localhost:/home/fedora/cni-1.3.0/scripts# CNI_PATH=/opt/cni/bin \
+CNI_IFNAME=eth0 \
+CNI_NETNS=/var/run/netns/testns \
+CNI_COMMAND=ADD \       
+CNI_CONTAINERID=test123 \
+/opt/cni/bin/bridge < /etc/cni/net.d/10-cni0.conf
+{
+    "cniVersion": "0.4.0",
+    "interfaces": [
+        {
+            "name": "cni0",
+            "mac": "16:50:11:49:14:91"
+        },
+        {
+            "name": "veth84b49163",
+            "mac": "ca:bc:d4:61:07:d7"
+        },
+        {
+            "name": "eth0",
+            "mac": "de:50:1e:da:32:12",
+            "sandbox": "/var/run/netns/testns"
+        }
+    ],
+    "ips": [
+        {
+            "version": "4",
+            "interface": 2,
+            "address": "10.66.0.2/16",
+            "gateway": "10.66.0.1"
+        }
+    ],
+    "routes": [
+        {
+            "dst": "0.0.0.0/0"
+        }
+    ],
+    "dns": {}
+}
+root@localhost:/home/fedora/cni-1.3.0/scripts# exit
+注销
+fedora@localhost:~/cni-1.3.0/scripts$ cd ~
+fedora@localhost:~$ curl -LO https://github.com/containerd/nerdctl/releases/download/v2.1.6/nerdctl-2.1.6-linux-amd64.tar.gz
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 10.5M  100 10.5M    0     0  5958k      0  0:00:01  0:00:01 --:--:-- 10.1M
+fedora@localhost:~$ mkdir nerdctl && tar -zxf nerdctl-2.1.6-linux-amd64.tar.gz -C nerdctl && sudo mv nerdctl/nerdctl /usr/bin/
+fedora@localhost:~$ which nerdctl
+/usr/bin/nerdctl
+fedora@localhost:~$ ls -l /usr/bin/nerdctl 
+-rwxr-xr-x. 1 fedora fedora 29M Sep 30 23:18 /usr/bin/nerdctl
+fedora@localhost:~$ sudo ctr images pull docker.io/library/alpine:latest
+docker.io/library/alpine:latest                 saved
+└──index (4bcff63911fc)                         complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (17389a4a082a)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (dbec5ca72d79)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (eafc1edb577d)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  ├──config (9234e8fb04c4)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──layer (9824c27679d3)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (647e9d4b0e5b)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (389f5c3b443d)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (20ff073fde2f)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (792f1e44b8f9)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (9a00b501930d)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (8c97401b6ace)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (12a8620b7248)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (bab5ae105062)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (4562b419adf4)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (02f8efbefad6)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (9c8d97ecfb80)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (6b7d99a42823)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (0a88b42ba69d)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (f30a2997d9e5)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (b2fa67becb64)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (b296a0a235c7)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (e9025aa78733)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (85014141f8b4)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (8bec0de62b43)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (4dbbc42c77da)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (5938519b4c46)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (fdfaeff667cc)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (83a4745a9c16)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (37dc4eb1e038)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   ├──manifest (9e7331b8f4bb)                   complete        |++++++++++++++++++++++++++++++++++++++|
+   │  └──config (2a3bbf834318)                  complete        |++++++++++++++++++++++++++++++++++++++|
+   └──manifest (0df49d0e46a2)                   complete        |++++++++++++++++++++++++++++++++++++++|
+      └──config (3153bed47c27)                  complete        |++++++++++++++++++++++++++++++++++++++|
+application/vnd.oci.image.index.v1+json sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1
+Completed pull from OCI Registry (docker.io/library/alpine:latest)      elapsed: 8.7 s  total:  3.7 Mi  (431.5 KiB/s)
+fedora@localhost:~$ sudo ctr images ls
+REF                             TYPE                                    DIGEST                                                                  SIZE    PLATFORMS                                                                                              LABELS 
+docker.io/library/alpine:latest application/vnd.oci.image.index.v1+json sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 3.6 MiB linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -
+fedora@localhost:~$ sudo nerdctl image ls
+REPOSITORY    TAG       IMAGE ID        CREATED           PLATFORM         SIZE       BLOB SIZE
+alpine        latest    4bcff63911fc    29 seconds ago    linux/s390x      0B         3.647MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/amd64      8.618MB    3.801MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/arm/v6     0B         3.503MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/arm/v7     0B         3.221MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/arm64      0B         4.132MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/386        0B         3.617MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/ppc64le    0B         3.729MB
+alpine        latest    4bcff63911fc    29 seconds ago    linux/riscv64    0B         3.514MB
+fedora@localhost:~$ sudo nerdctl run -d --name alpine --network cni0 alpine:latest
