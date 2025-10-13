@@ -1,6 +1,6 @@
 # Nginx
 
-[^tag ]: nginx
+[^tag]: nginx
 
 
 

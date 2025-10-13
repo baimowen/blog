@@ -1,6 +1,6 @@
 # SQL
 
-[^tag ]: sql
+[^tag]: sql
 
 
 

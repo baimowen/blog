@@ -1,6 +1,4 @@
-# 单节点k8s集群自动化部署
-
-[^tag ]: kubernetes
+[^tag]: kubernetes
 
 部署详细过程：[[k8s 编排]]
 

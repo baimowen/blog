@@ -1,6 +1,6 @@
 # podman生成k8s集群
 
-[^tag ]: kubernetes container
+[^tag]: kubernetes container
 
 
 
@@ -74,3 +74,11 @@ podman play kube <pod_name>.yaml
 ```shell
 kubectl create -f <pod_name>.yaml
 ```
+
+
+
+## 关于如何操作 k8s
+
+
+
+见 [[k8s 编排]]

@@ -1,4 +1,4 @@
-[^tag ]: linux
+[^tag]: linux
 
 ### btrfs on LUKS
 

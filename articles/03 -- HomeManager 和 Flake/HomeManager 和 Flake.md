@@ -1,6 +1,10 @@
 # HomeManager 和 Flake
 
-[^tag ]: nix
+[^tag]: nix
+
+
+
+**nixos安装**见：[[NixOS 安装]]
 
 
 

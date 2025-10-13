@@ -1,6 +1,6 @@
 # NixOS 安装
 
-[^tag ]: nix linux
+[^tag]: nix linux
 
 ## 准备工作
 
@@ -201,9 +201,15 @@ swapon --show
 mount | grep /dev/nvme0n1
 ```
 
->   [!note]
+>[!note]
 >
 >   或者使用 cfdisk（tui）、gdisk（交互式）进行分区由于较为简单直观此处不表
+
+
+>[!note]
+>
+>   有关**分区加密**见：[[btrfs on LUKS]]
+
 
 ### 生成配置
 
@@ -393,3 +399,7 @@ nixos-enter --root /mnt -c 'passwd <username>'
 umount -R /mnt
 reboot
 ```
+
+
+
+关于 **homemanager** 和 **flake**：[[HomeManager 和 Flake]]

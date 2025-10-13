@@ -1,6 +1,6 @@
 # Vagrant 用法
 
-[^tag ]: linux
+[^tag]: linux
 
 
 
@@ -33,7 +33,9 @@ ssh 登录启动的虚拟机
 vagrant ssh
 ```
 > [!note]
-> vagrant 创建的虚拟机默认用户为 vagrant，密码为 vagrant，并且配置免密 root
+> vagrant 创建的虚拟机默认用户为 vagrant，密码为 vagrant，并且配置**免密 root**
+> 
+> **免密root**见：[[免密root]]
 
 
 挂起启动的虚拟机

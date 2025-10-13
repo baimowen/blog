@@ -1,4 +1,4 @@
-[^tag ]: container
+[^tag]: container
 
 ## 安装
 

@@ -1,4 +1,18 @@
 {
   "vimMode": true,
-  "strictLineBreaks": true
+  "strictLineBreaks": true,
+  "pdfExportSettings": {
+    "includeName": true,
+    "pageSize": "Letter",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "tabSize": 2,
+  "useTab": false,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "./",
+  "newLinkFormat": "relative",
+  "newFileLocation": "current",
+  "alwaysUpdateLinks": false
 }

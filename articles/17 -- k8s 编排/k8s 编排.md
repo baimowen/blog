@@ -1,4 +1,4 @@
-[^ tag]: kubernetes linux
+[^tag]: kubernetes linux
 
 release: **Ubuntu25.04**
 
@@ -12,9 +12,7 @@ release: **Ubuntu25.04**
 
 
 
-[[master_node.svg]]
-
-![](master_node.svg)
+![master_node](https://raw.githubusercontent.com/baimowen/blog/main/articles/17%20--%20k8s%20%E7%BC%96%E6%8E%92/master_node.svg)
 
 
 
@@ -157,6 +155,31 @@ cat /proc/swaps
 >[!note]
 >
 >   🔗参考链接：[Swap - archwiki](https://wiki.archlinuxcn.org/wiki/Swap#)
+
+
+
+#### 加载内核模块
+
+
+
+需要加载两个内核模块：**br_netfilter** **overlay**
+
+
+
+* **br_netfilter**：桥接流量到 *iptables*
+
+* **overlay**：*overlayfs*
+
+
+```shell
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+sudo modprobe overlay
+sudo modprobe br_netfilter
+```
+
 
 
 
@@ -353,9 +376,7 @@ pause 镜像的作用：**创建并维护**当前 pod 的<u>网络命名空间</
 
 
 
-[[node.svg]]
-
-![node.svg](node.svg)
+![node.svg](https://raw.githubusercontent.com/baimowen/blog/main/articles/17%20--%20k8s%20%E7%BC%96%E6%8E%92/node.svg)
 
 
 
@@ -412,6 +433,12 @@ sudo kubeadm init \
 
 
 
+>[!note]
+>
+>   初始化问题见：[[kubeadm 初始化问题]]
+
+
+
 若初始化失败清理残余文件后*重新初始化*：
 
 
@@ -435,7 +462,7 @@ sudo systemctl restart containerd
 
 
 
-![success_info](success_info.png)
+![success_info](https://raw.githubusercontent.com/baimowen/blog/main/articles/17%20--%20k8s%20%E7%BC%96%E6%8E%92/success_info.png)
 
 
 
@@ -538,7 +565,7 @@ kubernetes 是一个开源**容器编排**工具
 
 
 
-![image](https://pic.sl.al/gdrive/pic/2025-08-31/hash_ac2dc7c5_9dd1790b1a23_components-of-kubernetes_1_.svg)
+![Kubernetes_components](https://raw.githubusercontent.com/baimowen/blog/main/articles/17%20--%20k8s%20%E7%BC%96%E6%8E%92/Kubernetes_components.svg)
 
 
 

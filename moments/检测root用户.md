@@ -1,3 +1,7 @@
+[^tag]: shell linux
+
+
+
 ### 检测 root 用户
 
   

@@ -1,6 +1,6 @@
 # kubeadm 初始化问题
 
-[^tag ]: kubernetes
+[^tag]: kubernetes
 
 
 
